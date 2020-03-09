@@ -16,14 +16,14 @@ public class Company {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long CompanyId;
+	private long id;
 	@Column
 	private String name;
 	@Column
 	private String email;
 	@Column
 	private String password;
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
 	private Set<Coupon> coupons;
 	
 	public Company() {} // CTOR for HIBERNATE
@@ -37,7 +37,7 @@ public class Company {
 
 	@Override
 	public String toString() {
-		return "Company [CompanyId=" + CompanyId + ", name=" + name + ", email=" + email + ", password=" + password
+		return "Company [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
 				+ "]";
 	}
 
@@ -74,7 +74,7 @@ public class Company {
 	}
 
 	public long getCompanyId() {
-		return CompanyId;
+		return id;
 	}
 
 }

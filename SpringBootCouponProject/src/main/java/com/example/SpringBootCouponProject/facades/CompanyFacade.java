@@ -2,28 +2,22 @@ package com.example.SpringBootCouponProject.facades;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.SpringBootCouponProject.beans.CategoryType;
 import com.example.SpringBootCouponProject.beans.Company;
 import com.example.SpringBootCouponProject.beans.Coupon;
 import com.example.SpringBootCouponProject.beans.Customer;
-import com.example.SpringBootCouponProject.database.CompanyRepository;
-import com.example.SpringBootCouponProject.database.CouponRepository;
-import com.example.SpringBootCouponProject.database.CustomerRepository;
 import com.example.SpringBootCouponProject.facades.exceptions.CannotUpdateCouponIdOrCompanyIdException;
 import com.example.SpringBootCouponProject.facades.exceptions.CompanyNotFoundException;
 import com.example.SpringBootCouponProject.facades.exceptions.CouponExistsException;
 
 @Service // Component
-public class CompanyFacade {
-	
-	@Autowired
-	private CouponRepository coupRepo;
-	@Autowired
-	private CompanyRepository compRepo;
-	@Autowired
-	private CustomerRepository custRepo;
+public class CompanyFacade extends ClientFacade {
+	/**
+	 * no need to auto wire the repositories
+	 * because Client Facade has them all
+	 * 
+	 * */
 	
 	public long companyId;
 	

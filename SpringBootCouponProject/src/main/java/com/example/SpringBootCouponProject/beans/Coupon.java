@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -22,9 +24,8 @@ public class Coupon {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long couponId;
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Company company;;
-	// can also use @Colum because it saves the data as ordinal by default
-	@Enumerated(EnumType.ORDINAL)
+	private Company company;
+	@Enumerated(EnumType.ORDINAL)// can also use @Colum because it saves the data as ordinal by default
 	private CategoryType type;
 	@Column
 	private String title;
@@ -41,6 +42,9 @@ public class Coupon {
 	@Column
 	private String image;
 	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(inverseJoinColumns = @JoinColumn(name = "customer_id"),
+	joinColumns = @JoinColumn(name = "coupon_id"),
+	name = "customers_vs_coupons")
 	private Set<Customer> customers;
 	
 	public Coupon() {} // CTOR for HIBERNATE

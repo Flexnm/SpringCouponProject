@@ -4,23 +4,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.SpringBootCouponProject.beans.CategoryType;
 import com.example.SpringBootCouponProject.beans.Coupon;
 import com.example.SpringBootCouponProject.beans.Customer;
-import com.example.SpringBootCouponProject.database.CouponRepository;
-import com.example.SpringBootCouponProject.database.CustomerRepository;
 import com.example.SpringBootCouponProject.facades.exceptions.CouponExistsException;
 import com.example.SpringBootCouponProject.facades.exceptions.CustomerNotFoundException;
 
 @Service // Component
-public class CustomerFacade {
-	
-	@Autowired
-	private CouponRepository coupRepo;
-	@Autowired
-	private CustomerRepository custRepo;
+public class CustomerFacade extends ClientFacade {
+	/**
+	 * no need to auto wire the repositories
+	 * because Client Facade has them all
+	 * 
+	 * */
 	
 	public long customerId;
 	

@@ -25,7 +25,7 @@ public class Customer {
 	private String email;
 	@Column
 	private String password;
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "customers", fetch = FetchType.EAGER)
 	private Set<Coupon> coupons;
 	
 	public Customer() {} // CTOR for HIBERNATE
