@@ -46,7 +46,7 @@ public class CustomerFacade extends ClientFacade {
 	
 	public void PurchaseCoupon(Coupon coupon) throws CouponExistsException, CustomerNotFoundException {
 		Calendar cal = Calendar.getInstance();
-		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new);
+		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new); // customer expected to exist in the first place.
 		if(coupon.getAmount() > 0 && coupon.getEndDate().after(new Date(cal.getTimeInMillis()))) {
 				for (Coupon coup : c.getCoupons()) {
 					if(coup.getCouponId() == coupon.getCouponId()) {
@@ -64,9 +64,9 @@ public class CustomerFacade extends ClientFacade {
 	// =================== get all customer coupons ============== \\
 	
 	public List<Coupon> getAllCoupons() throws CustomerNotFoundException {
-		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new);
+		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new); // customer expected to exist in the first place.
 		List<Coupon> coupons = new ArrayList<Coupon>();
-		for (Coupon coup : c.getCoupons()) {
+		for (Coupon coup : c.getCoupons()) { // if c.getCoupons() already returns the coupons set, you can simply change the function to return a Set<Coupon> and just have the function be "return c.getCoupons();"
 			coupons.add(coup);
 		}
 		return coupons;
@@ -75,7 +75,7 @@ public class CustomerFacade extends ClientFacade {
 	// ====================== get coupons by ==================== \\
 	
 	public List<Coupon> getCouponsByCategory(CategoryType type) throws CustomerNotFoundException {
-		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new);
+		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new); // customer expected to exist in the first place.
 		List<Coupon> coupons = new ArrayList<Coupon>();
 		for (Coupon coup : c.getCoupons()) {
 			if(coup.getType().equals(type))
@@ -85,10 +85,10 @@ public class CustomerFacade extends ClientFacade {
 	}
 	
 	public List<Coupon> getCouponsUpToPrice(double price) throws CustomerNotFoundException {
-		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new);
+		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new); // customer expected to exist in the first place.
 		List<Coupon> coupons = new ArrayList<Coupon>();
 		for (Coupon coup : c.getCoupons()) {
-			if(coup.getPrice() == price)
+			if(coup.getPrice() == price) // supposed to be <=
 			coupons.add(coup);
 		}
 		return coupons;
@@ -97,8 +97,8 @@ public class CustomerFacade extends ClientFacade {
 	// =================== get customer details =====================\\
 	
 	public Customer getCustomerDetails() throws CustomerNotFoundException {
-		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new);
-		c.setCoupons(c.getCoupons());
+		Customer c = custRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new); // customer expected to exist in the first place.
+		c.setCoupons(c.getCoupons()); // if this has to be done, then the function of c.getCoupons() is not working at all. If this is doing nothing, it means that c.getCoupons() does its job and you get from the database a list of coupons already.
 		return c;
 	}
 			

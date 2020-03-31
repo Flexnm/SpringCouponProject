@@ -10,6 +10,10 @@ import com.example.SpringBootCouponProject.beans.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	
+	/*
+	 * TODO merge the methods that needs to be merged. 
+	 */
+	
 	boolean existsByEmail(String email);
 	boolean existsByPassword(String password);
 	

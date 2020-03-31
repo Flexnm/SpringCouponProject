@@ -10,6 +10,11 @@ import com.example.SpringBootCouponProject.database.CustomerRepository;
 
 public class CouponExpirationDailyJob implements Runnable {
 
+	/*
+	 * I cant see here where you are deleting the customer purchases.
+	 * TODO delete customer purchases?
+	 */
+
 	@Autowired
 	private CouponRepository coupRepo;
 	@Autowired
@@ -21,17 +26,18 @@ public class CouponExpirationDailyJob implements Runnable {
 
 		while (!quit) {
 			Calendar cal = Calendar.getInstance();
-			
+
 			for (Coupon coupon : coupRepo.findAll()) { // run on all coupons.
 				if (coupon.getEndDate().before(new Date(cal.getTimeInMillis()))) { // if the coupon date expired
-					for (Customer cust : custRepo.findAll()) { // run on all customers
-						for (Coupon coup : cust.getCoupons()) { // run on each customer's coupons
-							if (coup.getCouponId() == coupon.getCouponId()) // if the the coupon has the same id as the coupon that expired
-								coupRepo.delete(coup); // delete the customer's coupon
+					for (Customer cust : custRepo.findAll()) { // run on all customers <-- pointless
+						for (Coupon coup : cust.getCoupons()) { // run on each customer's coupons <-- pointless
+							if (coup.getCouponId() == coupon.getCouponId()) // if the the coupon has the same id as the
+																			// coupon that expired <-- pointless
+								coupRepo.delete(coup); // delete the customer's coupon <-- ????
 
 						}
 					}
-					coupRepo.deleteById(coupon.getCouponId()); // delete coupon
+					coupRepo.deleteById(coupon.getCouponId()); // delete coupon <-- you need to do this.
 				}
 
 			}
@@ -45,7 +51,7 @@ public class CouponExpirationDailyJob implements Runnable {
 
 	}
 
-	public void stopJob() { 
+	public void stopJob() {
 		quit = true;
 	}
 
